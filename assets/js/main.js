@@ -69,6 +69,19 @@
 		var	delay = 325,
 			locked = false;
 
+		function loadDeferredContent($article) {
+			$article.find('iframe[data-src]').each(function() {
+				var $frame = $(this),
+					src = $frame.attr('data-src');
+
+				if (!src || $frame.attr('src'))
+					return;
+
+				$frame.attr('src', src);
+				$frame.removeAttr('data-src');
+			});
+		}
+
 		// Methods.
 			$main._show = function(id, initial) {
 
@@ -101,6 +114,7 @@
 								$article.show();
 
 							// Activate article.
+								loadDeferredContent($article);
 								$article.addClass('active');
 
 							// Unlock.
@@ -138,6 +152,7 @@
 								// Activate article.
 									setTimeout(function() {
 
+										loadDeferredContent($article);
 										$article.addClass('active');
 
 										// Window stuff.
@@ -177,6 +192,7 @@
 								// Activate article.
 									setTimeout(function() {
 
+										loadDeferredContent($article);
 										$article.addClass('active');
 
 										// Window stuff.
